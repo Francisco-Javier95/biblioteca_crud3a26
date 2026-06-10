@@ -15,4 +15,4 @@ class Usuario:
         self.activo = False
 
     def mostrar_info(self):
-        return f"Usuario ID: {self.id_usuario}, Nombre: {self.nombre}, Email: {self.email}, Carrera: {self.carrera}, Activo: {'Sí' if self.activo else 'No'}"
+        return f"Usuario ID: {self.id_usuario}, Nombre: {self.nombre}, Email: {self.email }, Carrera: {self.carrera}, Activo: {'Sí' if self.activo else 'No'}"
