@@ -17,7 +17,7 @@ def main():
                 print(
                     f"ID: {libro.libro_id}, Título: {libro.libro_titulo}, "
                     f"Autor: {libro.libro_autor}, ISBN: {libro.libro_isbn}, "
-                    f"Disponible: {'Sí' if libro.libro_diponible else 'NO'}"
+                    f"Disponible: {'Sí' if libro.libro_disponible else 'NO'}"
                 )
 
                 print("-------------------------------------")

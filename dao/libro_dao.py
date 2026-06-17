@@ -11,14 +11,13 @@ class LibroDAO:
         conexion = Conexion.obtener_conexion()
         cursor = conexion.cursor()
 
-        cursor.execute("SELCT * FROM libro")
+        cursor.execute("SELECT * FROM libro")
         registros = cursor.fetchall()
 
         libros = []
         for registro in registros:
-            libro = Libro(registro.libro_id, registro.libro_titulo, registro.libro_autor, registro.libro_isbn, registro.libro_disponible)
+            libro = Libro (libro_id=registro[0], libro_titulo=registro[1], libro_autor=registro[2], libro_isbn=registro[3], libro_disponible=registro[4])
             libros.append(libro)
-
         cursor.close()
         conexion.close()
         return libros
