@@ -30,7 +30,7 @@ class LibroDAO:
             VALUES (%s, %s, %s, %s)
         """
 
-        cursor.execute8(
+        cursor.execute(
             sql, 
             (
                 libro.libro_titulo,
@@ -53,7 +53,7 @@ class LibroDAO:
             WHERE libro_id = %s
         """
 
-        cursor.execute8(
+        cursor.execute(
             sql, 
             (
                 libro.libro_titulo,
