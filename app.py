@@ -1,7 +1,7 @@
 from dao.libro_dao import LibroDAO
 from models.libro import Libro
 
-def main():
+def ver_libros():
     try:
         libro_dao = LibroDAO()
 
@@ -34,7 +34,8 @@ def insertar_libro():
 
     try:
         libro_dao = LibroDAO()
-        libro = Libro(libro_titulo, libro_autor, libro_isbn, libro_disponible)
+        id = LibroDAO.obtener_ultimo_id() + 1
+        libro = Libro(id, libro_titulo, libro_autor, libro_isbn, libro_disponible)
         libro_dao.insertar(libro)
         print("Insercion realizada con éxito")
     except Exception as e:
