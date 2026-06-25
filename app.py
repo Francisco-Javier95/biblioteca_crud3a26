@@ -1,5 +1,6 @@
 from dao.libro_dao import LibroDAO
 from models.libro import Libro
+from models.libro import Libro_eliminar
 
 def ver_libros():
     try:
@@ -27,6 +28,7 @@ def ver_libros():
         print(e)
 
 def insertar_libro():
+    libro_id = None
     libro_titulo = input("Escribe el titulo del libro: ")
     libro_autor = int(input("Escribe el nombre del autor: "))
     libro_isbn = input("Escriba el isbn del nuevo libro: ")
@@ -34,12 +36,34 @@ def insertar_libro():
 
     try:
         libro_dao = LibroDAO()
-        id = LibroDAO.obtener_ultimo_id() + 1
-        libro = Libro(id, libro_titulo, libro_autor, libro_isbn, libro_disponible)
+        libro = Libro(libro_id, libro_titulo, libro_autor, libro_isbn, libro_disponible)
         libro_dao.insertar(libro)
         print("Insercion realizada con éxito")
     except Exception as e:
         print("Error al insertar un libro nuevo")
+        print(e)
+
+def actualizar_libro():
+    print("Selecciona el libro a actualizar")
+    try:
+        libro_dao = LibroDAO()
+        ver_libros()
+        id = int(input("Escribe el id del libro a actualizar"))
+
+        titulo = input("Escribe el nuevo titulo ")
+        autor = input("Escribe el nuevo autor: ")
+        isbn = input("Escribe el nuevo: ISBN: ")
+        disponible = bool(input("Escribe el nuevo valor de disponible"))
+
+        libro = Libro(id, titulo, autor, isbn, disponible)
+        libro_dao.actualizar(libro)
+        print(f"El libro {id} se ha actualizado exitosamente")
+
+    except Exception as e:
+        print("Error al actualizar un libro")
+        print (e)
+
+
         print(e)
 
 def main():
@@ -58,8 +82,8 @@ def main():
             insertar_libro()
         case 3:
             actualizar_libro()
-        case 4:
-            eliminar_libro()
+        #case 4:
+        #    eliminar_libro()
 
 if __name__ == "__main__":
     main()
