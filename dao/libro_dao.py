@@ -11,7 +11,7 @@ class LibroDAO:
         conexion = Conexion.obtener_conexion()
         cursor = conexion.cursor()
 
-        cursor.execute("SELECT * FROM vista_libros")
+        cursor.execute("SELECT * FROM libro")
         registros = cursor.fetchall()
 
         libros = []
@@ -49,7 +49,7 @@ class LibroDAO:
         cursor = conexion.cursor()
         sql = """
             UPDATE libro
-            SET libro_titulo = %s, libro_autor = %s, libro_isbn = %s, libro_diseponible = %s
+            SET libro_titulo = %s, libro_autor = %s, libro_isbn = %s, libro_disponible = %s
             WHERE libro_id = %s
         """
 
@@ -59,7 +59,8 @@ class LibroDAO:
                 libro.libro_titulo,
                 libro.libro_autor,
                 libro.libro_isbn,
-                libro.libro_disponible
+                libro.libro_disponible,
+                libro.libro_id
             )
         )
 
@@ -72,7 +73,7 @@ class LibroDAO:
         cursor = conexion.cursor()
         cursor.execute(
             "DELETE FROM libro WHERE libro_id = %s",
-            (libro_id,)
+            (libro_id.libro_id,)
         )
 
         conexion.commit()

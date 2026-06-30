@@ -20,5 +20,9 @@ class Libro:
     def mostrar_info(self):
         return f"Libro ID: {self.libro_id}, Título: {self.libro_titulo}, Autor: {self.libro_autor}, ISBN: {self.libro_isbn}, Disponible: {'Sí' if self.libro_disponible else 'No'} "
     
+class Libro_eliminar:
 
+    # Constrcutor
+    def __init__(self, libro_id):
+        self.libro_id = libro_id
 
