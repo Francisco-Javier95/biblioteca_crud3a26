@@ -1,9 +1,13 @@
 from dao.libro_dao import LibroDAO
 from dao.usuario_dao import UsuarioDAO
+from dao.autor_dao import AutorDAO
+
 from models.libro import Libro
 from models.libro import Libro_eliminar
 from models.usuario import Usuario
 from models.usuario import Usuario_eliminar
+from models.autor import Autor
+from models.autor import Autor_eliminar
 
 # ---------------------------------------CRUD LIBRO--------------------------------------------
 def ver_libros():
@@ -18,14 +22,14 @@ def ver_libros():
             print("Noy hay libros registrados.")
         else:
             for libro in libros:
-                print("-------------------------------------")
+                print("-----------------------------------------------------------------------------------------------------------------------------------------------")
                 print(
                     f"ID: {libro.libro_id}, Título: {libro.libro_titulo}, "
                     f"Autor: {libro.libro_autor}, ISBN: {libro.libro_isbn}, "
                     f"Disponible: {'Sí' if libro.libro_disponible else 'NO'}"
                 )
 
-                print("-------------------------------------")
+                print("-----------------------------------------------------------------------------------------------------------------------------------------------")
         print("\n Conexion exitosa a la base de datos")
     except Exception as e:
         print("Error: ")
@@ -98,14 +102,14 @@ def ver_usuario():
             print("Noy hay usuarios registrados.")
         else:
             for usuario in usuarios:
-                print("-------------------------------------")
+                print("-----------------------------------------------------------------------------------------------------------------------------------------------")
                 print(
                     f"ID: {usuario.usuario_id}, Nombre: {usuario.usuario_nombre}, "
                     f"Matrícula: {usuario.usuario_matricula}, Carrera: {usuario.usuario_carrera}, "
                     f"Email: {usuario.usuario_email}"
                 )
 
-                print("-------------------------------------")
+                print("-----------------------------------------------------------------------------------------------------------------------------------------------")
         print("\nConexion exitosa a la base de datos")
     except Exception as e:
         print("Error: ")
@@ -169,6 +173,82 @@ def eliminar_usuario():
     
 # ---------------------------------------FIN CRUD USUARIO-----------------------------------------
 
+# ---------------------------------------CRUD AUTOR-------------------------------------------
+def ver_autor():
+    try:
+        autor_dao = AutorDAO()
+
+        autores = autor_dao.obtener_todos()
+
+        print("\n=== Autores registrados en la biblioteca ===")
+
+        if len(autores) == 0:
+            print("Noy hay autores registrados.")
+        else:
+            for autor in autores:
+                print("-----------------------------------------------------------------------------------------------------------------------------------------------")
+                print(
+                    f"ID: {autor.autor_id}, Nombre: {autor.autor_nombre}"
+                )
+
+                print("-----------------------------------------------------------------------------------------------------------------------------------------------")
+        print("\nConexion exitosa a la base de datos")
+    except Exception as e:
+        print("Error: ")
+        print(e)
+
+def registrar_autor():
+    autor_id = None
+    autor_nombre = input("\nEscribe nombre del autor: ")
+
+    try:
+        autor_dao = AutorDAO()
+        autor = Autor(autor_id, autor_nombre)
+        autor_dao.insertar(autor)
+        print("Insercion realizada con éxito")
+    except Exception as e:
+        print("Error al insertar un autor nuevo")
+        print(e)
+
+def actualizar_autor():
+    print("Selecciona el autor a actualizar")
+    try:
+        ver_autor()
+        autor_id = int(input("\nEscribe el ID del autor a actualizar: "))
+
+        autor_nombre = input("Escribe el nuevo nombre: ")
+
+        autor_dao = AutorDAO()
+        autor = Autor(autor_id, autor_nombre)
+        autor_dao.actualizar(autor)
+
+        print(f"El autor {autor_id} se ha actualizado exitosamente")
+
+    except Exception as e:
+        print("Error al actualizar el autor")
+        print (e)
+
+def eliminar_autor():
+    try:
+        ver_autor() # mostrar todos los registros de autor
+
+        autor_id = int(input("\n" \
+        "" \
+        "" \
+        "Escribe el ID del autor a eliminar: "))
+
+        autor_dao = AutorDAO()
+        autor = Autor_eliminar(autor_id)
+        autor_dao.eliminar(autor)
+
+        print(f"Autor {autor_id} eliminado exitosamente")
+
+    except Exception as e:
+        print("Error al eliminar el autor")
+        print(e)
+    
+# ---------------------------------------FIN CRUD AUTOR-----------------------------------------
+
 def menu_libro():
     print("\nMenú de opciones LIBRO")
     print("1. Ver todos los libros")
@@ -205,15 +285,35 @@ def menu_usuario():
         case 4:
             eliminar_usuario()
 
+def menu_autor():
+    print("\nMenú de opciones AUTOR")
+    print("1. Ver todos los autores")
+    print("2. Registrar nuevo autor")
+    print("3. Actualizar un autor")
+    print("4. Eliminar un autor")
+    opcion = int(input("Selecciona una opcion (1-4): "))
+
+    match opcion:
+        case 1:
+            ver_autor()
+        case 2:
+            registrar_autor()
+        case 3:
+            actualizar_autor()
+        case 4:
+            eliminar_autor()
+
 def main():
     print("\n===== BIBLIOTECA UNIVERSITARIA =====")
     print("Menú de opciones: ")
     print("1. Gestión de libros")
     print("2. Gestión de usuarios")
-    opcion = int(input("Selecciona una opción (1-2): "))
+    print("3. Gestión de autores")
+    opcion = int(input("Selecciona una opción (1-3): "))
     match opcion:
         case 1: menu_libro()
         case 2: menu_usuario()
+        case 3: menu_autor()
         
     print("Gracias por usar la aplicación de biblioteca universitaria :)")
 
